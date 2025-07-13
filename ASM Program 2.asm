@@ -1,13 +1,16 @@
-.section .data
-buffer:
-    .byte 0x00             # 1 byte memory initialized to 0
+.section .data          # Data section (empty)
+.section .text          # Code section
 
-.section .text
-.globl _start              # Entry point
-
+        .globl _start  # Declare program entry point
 _start:
-    movl $0x64, %eax       # EAX = 100
-    movb $0x50, buffer     # buffer = 80
-    movl $1, %eax          # exit syscall number
-    movl $0, %ebx          # exit status 0
-    int $0x80              # system call
+        nop            # No operation (do nothing)
+
+        movl $22, %edx # Move immediate value 22 into EDX register
+
+mov_data_between_registers:
+        movl %edx, %eax # Copy value from EDX to EAX register
+
+exit:
+        movl $1, %eax  # Syscall number 1 (exit) in EAX
+        movl $0, %ebx  # Exit status 0 in EBX
+        int $0x80      # Trigger kernel interrupt to make syscall (exit program)
